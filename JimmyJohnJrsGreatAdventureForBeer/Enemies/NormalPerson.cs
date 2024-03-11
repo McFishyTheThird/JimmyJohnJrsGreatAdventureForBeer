@@ -7,7 +7,8 @@ public class NormalPerson : Enemy
         name = "Normal Person";
         knockoutMeterMax = 20;
         knockoutMeter = knockoutMeterMax;
-        knockoutPower = 5;
+        knockoutPowerMax = 5;
+        knockoutPowerMin = 1;
         dropAmount = 10;
         sobrietyIncrease = 1.5f;
         wantedLevelIncrease = 2.5f;

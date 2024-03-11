@@ -7,7 +7,8 @@ public class DonaldTrump : Enemy
         name = "Donald Trump";
         knockoutMeterMax = 500;
         knockoutMeter = knockoutMeterMax;
-        knockoutPower = 70;
+        knockoutPowerMax = 70;
+        knockoutPowerMin = 50;
         dropAmount = 0;
         sobrietyIncrease = 30;
         wantedLevelIncrease = 1000;

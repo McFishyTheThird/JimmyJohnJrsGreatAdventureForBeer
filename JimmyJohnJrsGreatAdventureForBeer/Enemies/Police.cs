@@ -7,7 +7,8 @@ public class Police : Enemy
         name = "Police Officer";
         knockoutMeterMax = 50;
         knockoutMeter = knockoutMeterMax;
-        knockoutPower = 10;
+        knockoutPowerMax = 10;
+        knockoutPowerMin = 5;
         dropAmount = 30;
         sobrietyIncrease = 5;
         wantedLevelIncrease = 7.5f;

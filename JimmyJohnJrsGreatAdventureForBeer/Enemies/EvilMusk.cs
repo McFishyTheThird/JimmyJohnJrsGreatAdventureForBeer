@@ -7,7 +7,8 @@ public class EvilMusk : Enemy
         name = "Evil Musk Clone";
         knockoutMeterMax = 150;
         knockoutMeter = knockoutMeterMax;
-        knockoutPower = 50;
+        knockoutPowerMax = 50;
+        knockoutPowerMin = 25;
         dropAmount = 100;
         sobrietyIncrease = 20;
         wantedLevelIncrease = 20;

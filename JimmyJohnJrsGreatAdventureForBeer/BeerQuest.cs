@@ -2,7 +2,7 @@
 
 public class BeerQuest
 {
-    JimmyJohnJr jimmy = new() {money = 25, drunkenMeter = 100, drunkenLevel = 25, knockoutMeter = 100, knockoutMeterMax = 100, knockoutPower = 10};
+    JimmyJohnJr jimmy = new();
     List<Drinks> shopInventory = new() {};
     DrinksInventory drinksInventory = new();
     EnemyFactory enemyFactory = new();

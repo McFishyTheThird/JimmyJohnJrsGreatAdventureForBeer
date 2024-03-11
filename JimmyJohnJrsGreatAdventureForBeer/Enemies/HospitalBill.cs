@@ -7,7 +7,8 @@ public class HospitalBill : Enemy
         name = "Hospital Bill";
         knockoutMeterMax = 1200;
         knockoutMeter = knockoutMeterMax;
-        knockoutPower = 200;
+        knockoutPowerMax = 200;
+        knockoutPowerMin = 100;
         dropAmount = 0;
         sobrietyIncrease = 99;
         wantedLevelIncrease = 0;

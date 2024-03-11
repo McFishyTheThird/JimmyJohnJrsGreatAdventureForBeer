@@ -7,7 +7,8 @@ public class HydrogenBomb : Enemy
         name = "Hydrogen bomb";
         knockoutMeterMax = 100000;
         knockoutMeter = knockoutMeterMax;
-        knockoutPower = 0;
+        knockoutPowerMax = 0;
+        knockoutPowerMin = 0;
         dropAmount = 0;
         sobrietyIncrease = 0;
         wantedLevelIncrease = 1;

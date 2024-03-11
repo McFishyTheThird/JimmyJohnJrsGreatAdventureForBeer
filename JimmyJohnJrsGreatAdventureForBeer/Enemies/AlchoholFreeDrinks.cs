@@ -7,7 +7,8 @@ public class AlchoholFreeDrinks : Enemy
         name = "0% Drinks";
         knockoutMeterMax = 50;
         knockoutMeter = knockoutMeterMax;
-        knockoutPower = 20;
+        knockoutPowerMax = 20;
+        knockoutPowerMin = 10;
         dropAmount = 35;
         sobrietyIncrease = 10f;
         wantedLevelIncrease = 5f;

@@ -7,7 +7,8 @@ public class SatanChan : Enemy
         name = "Satan-Chan";
         knockoutMeterMax = 250;
         knockoutMeter = knockoutMeterMax;
-        knockoutPower = 40;
+        knockoutPowerMax = 40;
+        knockoutPowerMin = 20;
         dropAmount = 70;
         sobrietyIncrease = 40;
         wantedLevelIncrease = 50;
