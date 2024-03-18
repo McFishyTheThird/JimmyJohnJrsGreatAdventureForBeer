@@ -6,6 +6,10 @@ public class BeerQuest
     List<Drinks> shopInventory = new() {};
     DrinksInventory drinksInventory = new();
     EnemyFactory enemyFactory = new();
+    Enemy enemy = new();
+    Characters opponent = new();
+    Characters attacker = new();
+    bool noEnemy = true;
     string keepBuying = "yes";
     int numberOfItemBought;
     float wantedLevel = 0;
@@ -66,10 +70,24 @@ public class BeerQuest
             keepBuying = Console.ReadLine().ToLower();
             Console.Clear();
         }
-        Console.ReadLine();
         while(jimmy.knockoutMeter >= 1)
         {
-            
+            wantedLevel = 30;
+            enemyFactory.PossibleEnemiesDuringLevels(wantedLevel);
+            if (noEnemy == true)
+            {
+                enemy = enemyFactory.GetEnemy();
+                Console.WriteLine($"You will face a {enemy.name}");
+                noEnemy = false;
+            }
+            Console.WriteLine("What do you want to do");
+            Console.WriteLine("A: Attack");
+            string choice = Console.ReadLine().ToLower();
+            if (choice == "a")
+            {
+                opponent = enemy;
+                jimmy.Attack(opponent);
+            }
         }
     }
 }

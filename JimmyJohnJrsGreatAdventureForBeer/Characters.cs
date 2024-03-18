@@ -10,4 +10,9 @@ public class Characters
     {
         return Random.Shared.Next(knockoutPowerMin,knockoutPowerMax);
     }
+    public void Attack(Characters opponent)
+    {
+        opponent.knockoutMeter -= AttackValue();
+        Console.WriteLine($"Opponets Current Life:{opponent.knockoutMeter}/{opponent.knockoutMeterMax}");
+    }
 }

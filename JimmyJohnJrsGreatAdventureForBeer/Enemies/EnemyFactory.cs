@@ -67,4 +67,9 @@ public class EnemyFactory
         }
 
     }
+
+    public virtual Enemy GetEnemy()
+    {
+        return enemies[Random.Shared.Next(enemies.Count)];
+    }
 }
