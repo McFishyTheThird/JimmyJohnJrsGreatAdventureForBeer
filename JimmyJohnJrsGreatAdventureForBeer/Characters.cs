@@ -13,6 +13,10 @@ public class Characters
     public void Attack(Characters opponent)
     {
         opponent.knockoutMeter -= AttackValue();
+        if(opponent.knockoutMeter > 0)
+        {
+            opponent.knockoutMeter = 0;
+        }
         Console.WriteLine($"Opponets Current Life:{opponent.knockoutMeter}/{opponent.knockoutMeterMax}");
     }
 }
