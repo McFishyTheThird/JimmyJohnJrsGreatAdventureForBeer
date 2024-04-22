@@ -4,19 +4,29 @@ public class Characters
 {
     public int knockoutMeter{get; set;}
     public int knockoutMeterMax{get; set;}
-    public int knockoutPowerMax{get; set;}
-    public int knockoutPowerMin{get; set;}
-    public virtual int AttackValue()
+    public float knockoutPowerMax{get; set;}
+    public float knockoutPowerMin{get; set;}
+    public float attackValue;
+    public virtual float AttackValue()
     {
-        return Random.Shared.Next(knockoutPowerMin,knockoutPowerMax);
+        return Random.Shared.Next((int)knockoutPowerMin,(int)knockoutPowerMax);
     }
-    public void Attack(Characters opponent)
+    public void Attack(Characters opponent, Enemy enemy)
     {
-        opponent.knockoutMeter -= AttackValue();
-        if(opponent.knockoutMeter > 0)
+        attackValue = AttackValue();
+        opponent.knockoutMeter -= (int)attackValue;
+        if(opponent.knockoutMeter < 0)
         {
             opponent.knockoutMeter = 0;
         }
-        Console.WriteLine($"Opponets Current Life:{opponent.knockoutMeter}/{opponent.knockoutMeterMax}");
+        if(opponent == enemy)
+        {
+            Console.WriteLine($"You deal {attackValue} damage to the {enemy.name}");
+            Console.WriteLine($"{enemy.name}s Current Life:{opponent.knockoutMeter}/{opponent.knockoutMeterMax}");
+        }
+        else
+        {
+            Console.WriteLine($"You take {attackValue} damage");
+        }
     }
 }

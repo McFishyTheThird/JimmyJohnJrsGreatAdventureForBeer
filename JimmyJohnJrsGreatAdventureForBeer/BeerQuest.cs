@@ -40,53 +40,98 @@ public class BeerQuest
             }
             Console.WriteLine($"Write the number of what you want to buy or any number above {shopInventory.Count} if you don't wish to purchase anything");
             int drinkChoice;
-            while(!int.TryParse(Console.ReadLine(), out drinkChoice))
+            while(!int.TryParse(Console.ReadLine(), out drinkChoice) || drinkChoice <= 0)
             {
-                Console.WriteLine("Did you forgot what a number was? A number is a symbol such as 1, 2 or 3 near the top of your keyboard");
+                Console.WriteLine("Did you forget what a number was? A number is a symbol such as 1, 2 or 3 near the top of your keyboard. Also 0 isnt allowed.");
                 Console.WriteLine("Try again: ");
             }
-            Console.WriteLine("How many do you want to buy?");
-            while(!int.TryParse(Console.ReadLine(), out numberOfItemBought))
-            {
-                Console.WriteLine("Did you forgot what a number was? A number is a symbol such as 1, 2 or 3 near the top of your keyboard");
-                Console.WriteLine("Try again: ");
+            if(drinkChoice < 10)
+                {
+                    Console.WriteLine("How many do you want to buy?");
+                    while(!int.TryParse(Console.ReadLine(), out numberOfItemBought))
+                    {
+                        Console.WriteLine("Did you forgot what a number was? A number is a symbol such as 1, 2 or 3 near the top of your keyboard");
+                        Console.WriteLine("Try again: ");
+                    }
+                if(drinkChoice <= shopInventory.Count && jimmy.money - (shopInventory[drinkChoice-1].cost * numberOfItemBought) >= 0)
+                {
+                    for(int i = 0; i < numberOfItemBought; i++)
+                    {
+                        jimmy.beerInventory.Add(shopInventory[drinkChoice-1]);
+                    }
+                    Console.WriteLine($"You now have {numberOfItemBought} {shopInventory[drinkChoice-1].name} in your collection");
+                    jimmy.money -= shopInventory[drinkChoice-1].cost;
+                }
+                else if(jimmy.money - (shopInventory[drinkChoice-1].cost * numberOfItemBought) < 0)
+                {
+                    Console.WriteLine("You need more money to fulfill your alcoholist dreams");
+                    Console.WriteLine($"You can buy up to {(int)(jimmy.money/shopInventory[drinkChoice-1].cost)} {shopInventory[drinkChoice-1].name}");
+                }
+                else
+                {
+                    Console.WriteLine("Looks like you don't want to buy anything");
+                }
+                Console.WriteLine("Do you want to buy something else? (y/n)");
+                keepBuying = Console.ReadLine().ToLower();
+                Console.Clear();
             }
-            if(drinkChoice <= shopInventory.Count && jimmy.money - (shopInventory[drinkChoice-1].cost * numberOfItemBought) >= 0)
-            {
-                jimmy.beerInventory.Add(shopInventory[drinkChoice+1]);
-                Console.WriteLine($"You now have {shopInventory[drinkChoice-1].name} in your collection");
-                jimmy.money -= shopInventory[drinkChoice-1].cost;
-            }
-            else if(jimmy.money - (shopInventory[drinkChoice-1].cost * numberOfItemBought) < 0)
-            {
-                Console.WriteLine("You need more money to fulfill your alcoholist dreams");
-                Console.WriteLine($"You can buy up to {(int)(jimmy.money/shopInventory[drinkChoice-1].cost)} {shopInventory[drinkChoice-1].name}");
-            }
-            else
-            {
-                Console.WriteLine("Looks like you don't want to buy anything");
-            }
-            Console.WriteLine("Do you want to buy something else? (y/n)");
-            keepBuying = Console.ReadLine().ToLower();
-            Console.Clear();
         }
         while(jimmy.knockoutMeter >= 1)
-        {
-            wantedLevel = 30;
+        { 
+            jimmy.knockoutPowerMin = jimmy.knockoutPowerMinOriginal * jimmy.drunkenLevel;
+            jimmy.knockoutPowerMax = jimmy.knockoutPowerMaxOriginal * jimmy.drunkenLevel;
+            Console.WriteLine($"Money: {jimmy.money}");
+            Console.WriteLine($"Knockout Meter: {jimmy.knockoutMeter}/{jimmy.knockoutMeterMax}");
+            Console.WriteLine($"Drunkenness: {jimmy.drunkenLevel}/{jimmy.drunkenMeter}");
+            Console.WriteLine($"Power: {jimmy.knockoutPowerMin}-{jimmy.knockoutPowerMax}");
             enemyFactory.PossibleEnemiesDuringLevels(wantedLevel);
             if (noEnemy == true)
             {
-                enemy = enemyFactory.GetEnemy();
+                enemy = enemyFactory.GetEnemy(enemy);
                 Console.WriteLine($"You will face a {enemy.name}");
                 noEnemy = false;
+                enemy.knockoutMeter = enemy.knockoutMeterMax;
+                Console.WriteLine(enemy.knockoutMeter);
             }
             Console.WriteLine("What do you want to do");
-            Console.WriteLine("A: Attack");
+            Console.WriteLine("A: Attack  B: Drink");
             string choice = Console.ReadLine().ToLower();
             if (choice == "a")
             {
                 opponent = enemy;
-                jimmy.Attack(opponent);
+                jimmy.Attack(opponent, enemy);
+                if(opponent.knockoutMeter <= 0)
+                {
+                    noEnemy = true;
+                }
+                else
+                {
+                    opponent = jimmy;
+                    enemy.Attack(opponent, enemy);
+                }
+                Console.ReadLine();
+                Console.Clear();
+            }
+            if(choice == "b")
+            {
+                Console.WriteLine("Current Drinks:");
+                for(int i = 0; i < jimmy.beerInventory.Count; i++)
+                {
+                    Console.WriteLine($"{i+1}. {jimmy.beerInventory[i].name}");
+                }
+                Console.WriteLine("What do you want to drink (write the number of the item)");
+                int drinkChoice;
+                while(!int.TryParse(Console.ReadLine(), out drinkChoice) || drinkChoice <= 0)
+                {
+                    Console.WriteLine("Did you forget what a number was? A number is a symbol such as 1, 2 or 3 near the top of your keyboard. Also 0 isnt allowed.");
+                    Console.WriteLine("Try again: ");
+                }
+                jimmy.drunkenLevel += jimmy.beerInventory[drinkChoice-1].alcoholLevel;
+                if(jimmy.drunkenLevel > jimmy.drunkenMeter)
+                {
+                    jimmy.drunkenLevel = jimmy.drunkenMeter;
+                }
+
             }
         }
     }
